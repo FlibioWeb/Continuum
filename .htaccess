@@ -1,0 +1,6 @@
+Options -Indexes
+
+<FilesMatch "\.(json|yaml)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>

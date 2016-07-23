@@ -1,0 +1,8 @@
+# The token used to connect to this CI server.
+secure_token: your_secure_token
+# Maximum amount of artifacts that one project can store. Set to -1 for infinite amount.
+max_project_artifacts: -1
+# Maximum file size of an artifact in bytes. Set to -1 for no limit.
+max_artifact_size: 100000000
+# Controls whether the server is private or not.
+private: false
