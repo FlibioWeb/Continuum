@@ -1,9 +1,12 @@
 <?php
-    require_once "scripts/spyc.php";
+
+    require_once "spyc.php";
 
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+
+    $baseDir = dirname(__DIR__)."/";
     
     class UserManager {
 
@@ -20,11 +23,12 @@
         }
 
         public static function createNewUser($user, $password, $display, $permissions) {
+            global $baseDir;
             // Generate the users file if it doesn't exist
             self::generateFile();
 
             // Load the users file
-            $data = Spyc::YAMLLoad("config/users.yaml");
+            $data = Spyc::YAMLLoad($baseDir."config/users.yaml");
 
             // Make sure the user doesn't exist
             if(!isset($data[$user])) {
@@ -42,13 +46,14 @@
         }
 
         public static function login($user, $password) {
+            global $baseDir;
             // Make sure the user is not logged in
             if(!self::isLoggedIn()) {
                 // Generate the users file if it doesn't exist
                 self::generateFile();
 
                 // Load the users file
-                $data = Spyc::YAMLLoad("config/users.yaml");
+                $data = Spyc::YAMLLoad($baseDir."config/users.yaml");
 
                 // Check if the username is in the file
                 if(isset($data[$user])) {
@@ -67,21 +72,23 @@
         }
 
         public static function generateFile() {
+            global $baseDir;
             // Make the directory if it doesn't exist
-            if(!file_exists("config")) {
-                mkdir("config");
+            if(!file_exists($baseDir."config")) {
+                mkdir($baseDir."config");
             }
             // Make the file if it doesn't exist
-            if(!file_exists("config/users.yaml")) {
-                file_put_contents("config/users.yaml", "");
+            if(!file_exists($baseDir."config/users.yaml")) {
+                file_put_contents($baseDir."config/users.yaml", "");
             }
         }
 
         private static function saveFile($data) {
+            global $baseDir;
             // Make sure the file exists
             self::generateFile();
             // Write to the file
-            file_put_contents("config/users.yaml", Spyc::YAMLDump($data, false, false, true));
+            file_put_contents($baseDir."config/users.yaml", Spyc::YAMLDump($data, false, false, true));
         }
 
         public static function logout() {
