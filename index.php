@@ -8,10 +8,11 @@
 <head>
     <title>Continuum</title>
     <link rel="stylesheet" type="text/css" href="./style/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 </head>
 <body>
     <div class="header">
-        <img src="./images/logo-black.png">
+        Continuum
     </div>
 
     <div class="content">

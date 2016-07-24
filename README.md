@@ -1,4 +1,4 @@
-![Continuum](http://i.imgur.com/S8gCOnK.png?2)
+![Continuum](http://i.imgur.com/K57dwSf.png?1)
 
 ---
 
