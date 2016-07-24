@@ -71,6 +71,16 @@
             return false;
         }
 
+        public static function userExists() {
+            global $baseDir;
+            self::generateFile();
+
+            // Load the users file
+            $data = Spyc::YAMLLoad($baseDir."config/users.yaml");
+
+            return (count($data) > 0);
+        }
+
         public static function generateFile() {
             global $baseDir;
             // Make the directory if it doesn't exist
