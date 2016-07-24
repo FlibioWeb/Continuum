@@ -2,7 +2,7 @@
 username: your_username
 # The token used to connect to this server.
 secure_token: your_secure_token
-# Maximum amount of artifacts that one project can store. Set to -1 for infinite amount.
+# Maximum amount of build artifacts that one project can store. They are removed on a per-build basis.
 max_project_artifacts: -1
 # Maximum file size of an artifact in bytes. Set to -1 for no limit.
 max_artifact_size: 100000000
