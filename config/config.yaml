@@ -1,4 +1,6 @@
-# The token used to connect to this CI server.
+# The username used to connect to this server. This username does not allow you to log into the control panel.
+username: your_username
+# The token used to connect to this server.
 secure_token: your_secure_token
 # Maximum amount of artifacts that one project can store. Set to -1 for infinite amount.
 max_project_artifacts: -1
