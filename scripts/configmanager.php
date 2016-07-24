@@ -29,5 +29,5 @@
     }
 
     abstract class DefaultConfig {
-        const defaultValues = array("secure_token" => "your_token_here", "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
+        const defaultValues = array("username" => "your_username", "secure_token" => "your_token_here", "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
     }
