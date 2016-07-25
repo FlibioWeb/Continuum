@@ -41,6 +41,15 @@
                 // Load login page
                 $page = "login.php";
                 break;
+
+            case 'logout':
+                // Logout the user
+                if(UserManager::isLoggedIn()) {
+                    UserManager::logout();
+                }
+                header("Location: ".BASEPATH);
+                die("Redirecting...");
+                break;
             
             default:
                 // Page not found
