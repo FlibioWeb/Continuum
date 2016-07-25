@@ -11,5 +11,6 @@ RewriteEngine On
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(scripts/formprocess.php)$
 
 RewriteRule ^.*$ ./index.php

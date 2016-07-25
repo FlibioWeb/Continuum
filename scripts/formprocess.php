@@ -31,6 +31,27 @@
                 }
 
                 break;
+
+            case 'login':
+                $params = FormUtils::getParametersWithToken(array("username", "password"), $_POST, "login");
+
+                if($params != false) {
+                    $username = $params["username"];
+                    $password = $params["password"];
+
+                    if(UserManager::login($username, $password)) {
+                        // Success
+                        header("Location: ../");
+                    } else {
+                        // Creation failed
+                        header("Location: ../");
+                    }
+                } else {
+                    // Invalid parameters
+                    header("Location: ../");
+                }
+
+                break;
             
             default:
                 die("An error has occurred!");
