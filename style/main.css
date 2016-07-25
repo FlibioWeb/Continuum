@@ -27,13 +27,18 @@ body, html {
 .message {
     width: 100%;
     padding: 3px 3px 3px 20px;
-    background-color: #FFFEB0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 .message:empty {
     display: none;
+}
+.message.good {
+    background-color: #AAFF9B;
+}
+.message.bad {
+    background-color: #FFA08F;
 }
 .sidebar {
     float: left;
@@ -54,4 +59,19 @@ body, html {
 }
 .sidebar li {
     margin: 10px 0;
+}
+.userForm {
+    text-align: center;
+}
+.userForm .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+.userForm input:not([type="submit"]) {
+    border: 1px solid #D8D8D8;
+    padding: 5px;
+    border-radius: 3px;
+}
+.userForm input[type="submit"] {
+
 }
