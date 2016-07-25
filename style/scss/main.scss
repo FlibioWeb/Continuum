@@ -1,18 +1,17 @@
+@import "mixins", "variables";
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: $main-font;
 }
 .header {
-    font-family: 'Dosis', sans-serif;
+    font-family: $title-font;
     font-size: 26px;
     background-color: black;
     width: 100%;
     padding: 7px 7px 7px 20px;
     height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    @include border-box();
     & a {
         color: white;
         text-decoration: none;
@@ -20,16 +19,12 @@ body, html {
 }
 .content {
     padding: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    @include border-box();
 }
 .message {
     width: 100%;
     padding: 3px 3px 3px 20px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    @include border-box();
     color: white;
     &.good {
         background-color: #388E3C;
@@ -45,9 +40,7 @@ body, html {
     float: left;
     width: auto;
     padding: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    @include border-box();
     & .title {
         font-weight: 700;
         font-size: 19px;
