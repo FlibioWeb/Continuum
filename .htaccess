@@ -4,3 +4,12 @@ Options -Indexes
 Order Allow,Deny
 Deny from all
 </FilesMatch>
+
+# Rewrite all traffic through index
+
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^.*$ ./index.php
