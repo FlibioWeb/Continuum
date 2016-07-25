@@ -1,0 +1,11 @@
+{
+  "name": "continuum",
+  "main": "gulpfile.js",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-eol": "^0.1.2",
+    "gulp-sass": "^2.3.2"
+  }
+}
