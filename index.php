@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="header">
-        Continuum
+        <a href="<?php echo BASEPATH; ?>">Continuum</a>
     </div>
     <div class="message"></div>
     <div class="content"><?php global $page; require_once BASEDIR."partials/".$page; ?></div>

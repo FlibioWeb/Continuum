@@ -5,7 +5,6 @@ body, html {
 }
 .header {
     font-family: 'Comfortaa', 'Arial Narrow', Arial, sans-serif;
-    color: white;
     font-size: 30px;
     background-color: black;
     width: 100%;
@@ -14,6 +13,10 @@ body, html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+.header a {
+    color: white;
+    text-decoration: none;
 }
 .content {
     padding: 10px;
