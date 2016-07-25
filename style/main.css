@@ -5,11 +5,10 @@ body, html {
 }
 .header {
     font-family: 'Dosis', sans-serif;
-    font-variant: auto;
     font-size: 26px;
     background-color: black;
     width: 100%;
-    padding: 7px;
+    padding: 7px 7px 7px 20px;
     height: auto;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -31,20 +30,21 @@ body, html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    color: white;
 }
 .message:empty {
     display: none;
 }
 .message.good {
-    background-color: #AAFF9B;
+    background-color: #388E3C;
 }
 .message.bad {
-    background-color: #FFA08F;
+    background-color: #F44336;
 }
 .sidebar {
     float: left;
     width: auto;
-    padding: 20px;
+    padding: 10px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -65,7 +65,7 @@ body, html {
     text-align: center;
 }
 .userForm .title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
 }
 .userForm input:not([type="submit"]) {
@@ -74,11 +74,20 @@ body, html {
     border-radius: 3px;
 }
 .userForm input[type="submit"] {
-    padding: 7px;
-    background-color: white;
-    border: 1px solid #D8D8D8;
-    border-radius: 3px;
+    padding: 10px;
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    font-variant: small-caps;
+    font-size: 18px;
+    box-shadow: none;
+    -webkit-transition: box-shadow .5s;
+    -moz-transition: box-shadow .5s;
+    -ms-transition: box-shadow .5s;
+    -o-transition: box-shadow .5s;
+    transition: box-shadow .5s;
 }
 .userForm input[type="submit"]:hover {
     cursor: pointer;
+    box-shadow: inset 0 0 0 5px #3071A9;
 }

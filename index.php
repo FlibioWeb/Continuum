@@ -11,7 +11,7 @@
 ?>
 <head>
     <title>Continuum</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Dosis" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Dosis" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>style/main.css">
 </head>
 <body>

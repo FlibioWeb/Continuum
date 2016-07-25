@@ -5,7 +5,7 @@
     $token = FormUtils::generateToken("register");
 ?>
 <form class="userForm" method="POST" action="./scripts/formprocess.php">
-    <span class="title">Continuum Initial Setup</span>
+    <span class="title">Continuum Registration</span>
     <p>
     <input type="hidden" name="formname" value="register">
     <input type="hidden" name="token" value="<?php echo $token; ?>">
