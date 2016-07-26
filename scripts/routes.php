@@ -6,6 +6,7 @@
 
     require_once BASEDIR."scripts/usermanager.php";
     require_once BASEDIR."scripts/configmanager.php";
+    require_once BASEDIR."scripts/projectmanager.php";
 
     abstract class Route {
 
@@ -134,6 +135,47 @@
                 // Load the register page
                 $this->redirect($basePath, "", "bad/You are not logged in!");
             }
+        }
+
+    }
+
+    class ProjectRoute extends Route {
+
+        public function isValid($params) {
+            if(count($params) == 2) {
+                if($params[1] == "project") {
+                    return ProjectManager::projectExists($params[2]);
+                }
+            }
+            return false;
+        }
+
+        public function routeUser($basePath, $params) {
+            $GLOBALS['project'] = $params[2];
+            return "project";
+        }
+
+    }
+
+    class ProjectBuildRoute extends Route {
+
+        public function isValid($params) {
+            if(count($params) == 4) {
+                if($params[1] == "project" && $params[3] == "build") {
+                    if(ProjectManager::projectExists($params[2])) {
+                        $projectData = ProjectManager::getProject($params[2]);
+                        $buildNumber = $params[4];
+                        return ($buildNumber > 0 && $buildNumber <= $projectData["build-number"]);
+                    }
+                }
+            }
+            return false;
+        }
+
+        public function routeUser($basePath, $params) {
+            $GLOBALS['project'] = $params[2];
+            $GLOBALS['build'] = $params[4];
+            return "projectbuild";
         }
 
     }

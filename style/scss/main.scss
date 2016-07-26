@@ -26,6 +26,7 @@ body, html {
 }
 .content {
     padding: 10px;
+    margin-top: 15px;
     @include border-box();
 }
 .message {
@@ -43,21 +44,47 @@ body, html {
         display: none;
     }
 }
-.sidebar {
-    float: left;
-    width: auto;
-    padding: 10px;
-    @include border-box();
-    & .title {
-        font-weight: 700;
-        font-size: 19px;
+.projectTable {
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+    border-spacing: 0;
+    border-bottom: 1px solid #CCCCCC;
+    & th {
+        background-color: #F2F2F2;
+        font-weight: 500;
+        font-size: 17px;
+        padding: 6px 0;
+        border-top: 1px solid #CCCCCC;
+        &:first-child {
+            border-top-left-radius: 10px;
+            border-left: 1px solid #CCCCCC;
+        }
+        &:last-child {
+            border-top-right-radius: 10px;
+            border-right: 1px solid #CCCCCC;
+        }
     }
-    & ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        & li {
-            margin: 10px 0;
+    & td {
+        padding: 6px 0;
+        & a {
+            text-decoration: none;
+            color: black;
+            display: block;
+        }
+        &:first-child {
+            border-left: 1px solid #CCCCCC;
+        }
+        &:last-child {
+            border-right: 1px solid #CCCCCC;
+        }
+    }
+    & tr {
+        &:last-child {
+            border-bottom: 1px solid #CCCCCC;
+        }
+        &:nth-child(odd) {
+            background-color: #F8F8F8;
         }
     }
 }

@@ -9,10 +9,12 @@
         public function __construct() {
             // Add all the routes
             $this->routes = array(
-                new DefaultRoute(),
-                new RegisterRoute(),
-                new LoginRoute(),
-                new LogoutRoute()
+                new DefaultRoute,
+                new RegisterRoute,
+                new LoginRoute,
+                new LogoutRoute,
+                new ProjectRoute,
+                new ProjectBuildRoute,
                 );
         }
 

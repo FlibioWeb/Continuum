@@ -18,6 +18,7 @@
     require_once BASEDIR."scripts/router.php";
 
     $page = (new Router)->routeToPage(BASEPATH);
+
     if($page == false) {
         $page = "404";
     }
