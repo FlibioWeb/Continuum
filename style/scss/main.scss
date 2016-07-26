@@ -5,13 +5,20 @@ body, html {
     font-family: $main-font;
 }
 .header {
-    font-family: $title-font;
-    font-size: 26px;
     background-color: black;
     width: 100%;
-    padding: 7px 7px 7px 20px;
-    height: auto;
+    padding: 7px 20px;
+    height: 47px;
     @include border-box();
+    & .title {
+        font-family: $title-font;
+        font-size: 26px;
+        float: left;
+    }
+    & .user {
+        float: right;
+        margin-top: 7px;
+    }
     & a {
         color: white;
         text-decoration: none;
