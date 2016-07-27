@@ -45,6 +45,7 @@
                 $projectData[$projectName]["display"] = $projectName;
                 $projectData[$projectName]["github"] = $github;
                 $projectData[$projectName]["branch"] = $branch;
+                $projectData[$projectName]["description"] = "";
                 $projectData[$projectName]["build-number"] = 0;
                 $projectData[$projectName]["builds"] = array();
                 self::writeData($projectData);

@@ -25,7 +25,7 @@ body, html {
     }
 }
 .content {
-    padding: 10px;
+    padding: 10px 20px;
     margin-top: 15px;
     @include border-box();
 }
@@ -116,5 +116,59 @@ body, html {
             cursor: pointer;
             box-shadow: inset 0 0 0 5px #3071A9;
         }
+    }
+}
+.buildTable {
+    float: left;
+    border-spacing: 0;
+    border-bottom: 1px solid #CCCCCC;
+    & th {
+        background-color: #F2F2F2;
+        font-weight: 500;
+        font-size: 17px;
+        padding: 6px;
+        border-top: 1px solid #CCCCCC;
+        &:first-child {
+            border-top-left-radius: 10px;
+            border-left: 1px solid #CCCCCC;
+        }
+        &:last-child {
+            border-top-right-radius: 10px;
+            border-right: 1px solid #CCCCCC;
+        }
+    }
+    & td {
+        padding: 6px;
+        & a {
+            text-decoration: none;
+            color: black;
+            display: block;
+        }
+        &:first-child {
+            border-left: 1px solid #CCCCCC;
+        }
+        &:last-child {
+            border-right: 1px solid #CCCCCC;
+        }
+    }
+    & tr {
+        &:last-child {
+            border-bottom: 1px solid #CCCCCC;
+        }
+        &:nth-child(odd) {
+            background-color: #F8F8F8;
+        }
+    }
+}
+.projectInfo {
+    float: left;
+    margin-left: 15px;
+    & .title {
+        font-size: 22px;
+        font-weight: 500;
+    }
+    & .subtitle {
+        font-size: 19px;
+        font-weight: 500;
     }
 }

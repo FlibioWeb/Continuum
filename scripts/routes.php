@@ -152,6 +152,7 @@
 
         public function routeUser($basePath, $params) {
             $GLOBALS['project'] = $params[2];
+            $GLOBALS['titlePrefix'] = $params[2];
             return "project";
         }
 
@@ -175,6 +176,7 @@
         public function routeUser($basePath, $params) {
             $GLOBALS['project'] = $params[2];
             $GLOBALS['build'] = $params[4];
+            $GLOBALS['titlePrefix'] = $params[2]." #".$params[4];
             return "projectbuild";
         }
 
