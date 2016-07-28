@@ -7,7 +7,7 @@
     foreach (ProjectManager::getProjects() as $project => $data) {
         $buildNumber = $data["build-number"];
         if($buildNumber > 0) {
-            $buildDate = $data["builds"][$buildNumber]["date"];
+            $buildDate = (new DateTime($data["builds"][$buildNumber]["date"]))->format("M j, Y g:i a");
         } else {
             $buildDate = "N/A";
         }
