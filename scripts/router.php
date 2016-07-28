@@ -15,6 +15,7 @@
                 new LogoutRoute,
                 new ProjectRoute,
                 new ProjectBuildRoute,
+                new ChangesRoute
                 );
         }
 

@@ -181,3 +181,24 @@
         }
 
     }
+
+    class ChangesRoute extends Route {
+
+        public function isValid($params) {
+            if(count($params) == 3) {
+                if($params[1] == "project" && $params[3] == "changes") {
+                    if(ProjectManager::projectExists($params[2])) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public function routeUser($basePath, $params) {
+            $GLOBALS['project'] = $params[2];
+            $GLOBALS['titlePrefix'] = $params[2]." Changes";
+            return "changes";
+        }
+
+    }

@@ -18,9 +18,17 @@
 
     $latestBuild = $data["build-number"];
 
+    $latestMessage = "N/A";
+    if(isset($data["builds"][$latestBuild]["message"])) {
+        $latestMessage = $data["builds"][$latestBuild]["message"];
+    }
+
     $artifacts = "";
-    foreach ($data["builds"][$data["build-number"]]["artifacts"] as $artifact) {
-        $artifacts.="<p><a href='".BASEPATH."projects/$project/$latestBuild/$artifact' download target='_blank'>$artifact</a></p>";
+
+    if($latestBuild > 0) {
+        foreach ($data["builds"][$latestBuild]["artifacts"] as $artifact) {
+            $artifacts.="<p><a href='".BASEPATH."projects/$project/$latestBuild/$artifact' download target='_blank'>$artifact</a></p>";
+        }
     }
 ?>
 <table class="buildTable">
@@ -36,7 +44,7 @@
     </p>
     <span class="subtitle">Latest Change</span>
     <p>
-    <code><?php echo nl2br($data["builds"][$latestBuild]["message"]); ?></code>
+    <code><?php echo nl2br($latestMessage); ?></code>
     </p>
     <span class="subtitle">Latest Artifacts</span>
     <p>
