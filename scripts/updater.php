@@ -91,7 +91,7 @@
             } else {
                 $data = json_decode(file_get_contents($baseDir."updater.json"), true);
                 // Load the latest data
-                $latest = file_get_contents("https://api.github.com/repos/FlibioWeb/Continuum/releases/latest", false, $context);   
+                $latest = file_get_contents("https://api.github.com/repos/FlibioWeb/Continuum/releases/latest", false, $context);
                 $data["cache"]["content"] = $latest;
                 $data["cache"]["date"] = (new DateTime)->format("Y-m-d H:i:s");
                 // Save the cache

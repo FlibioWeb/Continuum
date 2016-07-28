@@ -1,5 +1,7 @@
 <?php
 
+    $options = array('http' => array('user_agent'=> $_SERVER['HTTP_USER_AGENT']));
+    $context = stream_context_create($options);
     $baseDir = dirname(__DIR__)."/";
 
     class ProjectManager {
@@ -53,7 +55,7 @@
         }
 
         public static function addBuild($project, $commit) {
-            global $baseDir;
+            global $baseDir, $context;
             if(self::projectExists($project)) {
                 // Get the project data
                 $projectData = self::getProjects();
@@ -64,20 +66,27 @@
                 // Get all project builds
                 $builds = $projectData[$project]["builds"];
 
-                // Set build data
-                $builds[$buildNumber]["date"] = (new DateTime)->format("Y-m-d H:i:s");
-                $builds[$buildNumber]["commit"] = $commit;
-                $builds[$buildNumber]["artifacts"] = array();
+                // Load the commit
+                $commitData = file_get_contents("https://api.github.com/repos/".$projectData[$project]["github"]."/commits/$commit", false, $context);
+                $commitData = json_decode($commitData, true);
 
-                // Create the build directory
-                mkdir($baseDir."projects/".$project."/".$buildNumber);
+                if(isset($commitData["commit"]["message"])) {
+                    // Set build data
+                    $builds[$buildNumber]["date"] = (new DateTime)->format("Y-m-d H:i:s");
+                    $builds[$buildNumber]["commit"] = $commit;
+                    $builds[$buildNumber]["message"] = $commitData["commit"]["message"];
+                    $builds[$buildNumber]["artifacts"] = array();
 
-                // Save the data
-                $projectData[$project]["builds"] = $builds;
-                $projectData[$project]["build-number"] = $buildNumber;
-                self::writeData($projectData);
+                    // Create the build directory
+                    mkdir($baseDir."projects/".$project."/".$buildNumber);
 
-                return $buildNumber;
+                    // Save the data
+                    $projectData[$project]["builds"] = $builds;
+                    $projectData[$project]["build-number"] = $buildNumber;
+                    self::writeData($projectData);
+
+                    return $buildNumber;
+                }
             }
             return false;
         }
@@ -132,7 +141,4 @@
             file_put_contents($baseDir."projects/data.json", json_encode($data));
         }
 
-        private static function init() {
-            $baseDir = dirname(__DIR__)."/";
-        }
     }

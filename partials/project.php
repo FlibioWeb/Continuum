@@ -34,6 +34,10 @@
     <p>
     <?php echo $data["description"]; ?>
     </p>
+    <span class="subtitle">Latest Change</span>
+    <p>
+    <code><?php echo nl2br($data["builds"][$latestBuild]["message"]); ?></code>
+    </p>
     <span class="subtitle">Latest Artifacts</span>
     <p>
     <?php echo $artifacts; ?>
