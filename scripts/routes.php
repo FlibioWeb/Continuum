@@ -202,3 +202,24 @@
         }
 
     }
+
+    class AdminRoute extends Route {
+
+        public function isValid($params) {
+            if(count($params) == 1) {
+                return ($params[1] == "admin");
+            }
+            return false;
+        }
+
+        public function routeUser($basePath, $params) {
+            if(UserManager::isLoggedIn()) {
+                if(in_array("admin.super", UserManager::getUser()["permissions"])) {
+                    $GLOBALS['titlePrefix'] = "Admin";
+                    return "admin";
+                }
+            }
+            $this->redirect($basePath, "", "bad/You do not have permission to view that page!");
+        }
+
+    }
