@@ -29,12 +29,12 @@
                     } else {
                         // Creation failed
                         $_SESSION["message-bad"] = "Registration failed!";
-                        header("Location: ../");
+                        header("Location: ../register");
                     }
                 } else {
                     // Invalid parameters
                     $_SESSION["message-bad"] = "Invalid parameters!";
-                    header("Location: ../");
+                    header("Location: ../register");
                 }
 
                 break;
@@ -53,12 +53,12 @@
                     } else {
                         // Login failed
                         $_SESSION["message-bad"] = "Invalid login!";
-                        header("Location: ../");
+                        header("Location: ../login");
                     }
                 } else {
                     // Invalid parameters
                     $_SESSION["message-bad"] = "Invalid parameters!";
-                    header("Location: ../");
+                    header("Location: ../login");
                 }
 
                 break;
