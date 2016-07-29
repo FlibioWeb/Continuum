@@ -46,6 +46,8 @@
     <p>
     <code><?php echo nl2br($latestMessage); ?></code>
     </p>
+    <a href="<?php echo BASEPATH."project/$project/changes"; ?>">All Changes</a>
+    <p>
     <span class="subtitle">Latest Artifacts</span>
     <p>
     <?php echo $artifacts; ?>
