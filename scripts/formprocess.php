@@ -9,6 +9,7 @@
     require_once "formutils.php";
     require_once "usermanager.php";
     require_once "configmanager.php";
+    require_once "projectmanager.php";
     require_once "updater.php";
 
     if(isset($_POST["formname"])) {
@@ -100,6 +101,35 @@
 
                     // Success
                     redirect("admin", "good/Saved configuration!");
+                } else {
+                    // Invalid parameters
+                    redirect("admin", "bad/Invalid parameters!");
+                }
+
+                break;
+
+            case 'addproject':
+                if(!UserManager::hasPermission("admin.super")) {
+                    // User can not do this
+                    redirect("", "bad/You do not have permission to do that!");
+                }
+                $params = FormUtils::getParametersWithToken(array("user", "repo", "branch"), $_POST, "addproject");
+
+                if($params != false) {
+                    $user = $params["user"];
+                    $repo = $params["repo"];
+                    $branch = $params["branch"];
+
+                    if(ProjectManager::projectExists($repo)) {
+                        // The project exists
+                        redirect("admin", "bad/That project already exists!");
+                    } else {
+                        if(ProjectManager::createProject($repo, $user."/".$repo, $branch)) {
+                            redirect("admin", "good/Created project!");
+                        } else {
+                            redirect("admin", "bad/Failed to create project!");
+                        }
+                    }
                 } else {
                     // Invalid parameters
                     redirect("admin", "bad/Invalid parameters!");

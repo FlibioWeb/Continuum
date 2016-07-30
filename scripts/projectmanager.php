@@ -51,7 +51,10 @@
                 $projectData[$projectName]["build-number"] = 0;
                 $projectData[$projectName]["builds"] = array();
                 self::writeData($projectData);
+
+                return true;
             }
+            return false;
         }
 
         public static function addBuild($project, $commit, $jobId) {

@@ -8,6 +8,7 @@
 
     $configToken = FormUtils::generateToken("config");
     $updateToken = FormUtils::generateToken("update");
+    $addProjectToken = FormUtils::generateToken("addproject");
 
     $version = "N/A";
     $currentVersion = Updater::getCurrentVersion();
@@ -18,15 +19,17 @@
     }
 ?>
 <div class="admin">
+    <!--Update Form-->
     <form class="adminForm" method="POST" action="./scripts/formprocess.php">
         <p><span class="title">Updates</span></p>
         <input type="hidden" name="formname" value="update">
         <input type="hidden" name="token" value="<?php echo $updateToken; ?>">
-        <p class="margin last-plain">Current Version: <?php echo $version; ?></p>
+        <p class="margin">Current Version: <?php echo $version; ?></p>
         <?php if($updateAvailable) echo "<input type=\"submit\" value=\"Update Now\">"; ?>
     </form>
     <p>
     <hr>
+    <!--Config Form-->
     <form class="adminForm" method="POST" action="./scripts/formprocess.php">
         <p><span class="title">Configuration</span></p>
         <input type="hidden" name="formname" value="config">
@@ -48,6 +51,27 @@
             <p><input type="checkbox" name="private" value="1" <?php if($config["private"]) echo "checked"; ?>></p>
         </p>
         <input type="submit" value="Save">
+    </form>
+    <p>
+    <hr>
+    <!--Add Project Form-->
+    <form class="adminForm" method="POST" action="./scripts/formprocess.php">
+        <p><span class="title">Add Project</span></p>
+        <input type="hidden" name="formname" value="addproject">
+        <input type="hidden" name="token" value="<?php echo $addProjectToken; ?>">
+        <p class="margin">
+            <label>GitHub User</label>
+            <p><input type="text" name="user">
+        </p>
+        <p class="margin">
+            <label>GitHub Repository</label>
+            <p><input type="text" name="repo"></p>
+        </p>
+        <p class="margin">
+            <label>Repository Branch</label>
+            <p><input type="text" name="branch"></p>
+        </p>
+        <input type="submit" value="Add Project">
     </form>
     <p>
     <hr>

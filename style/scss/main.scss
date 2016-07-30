@@ -184,12 +184,6 @@ body, html {
     & p.margin {
         margin-top: 15px;
         margin-bottom: 3px;
-        &.last-plain {
-            margin-bottom: 10px;
-        }
-        &.last > input {
-            margin-bottom: 100px;
-        }
     }
     & input:not([type="submit"]) {
         border: 1px solid #D8D8D8;
@@ -204,6 +198,7 @@ body, html {
         font-variant: small-caps;
         font-size: 18px;
         box-shadow: none;
+        margin-top: 10px;
         -webkit-transition: box-shadow .5s;
         -moz-transition: box-shadow .5s;
         -ms-transition: box-shadow .5s;
