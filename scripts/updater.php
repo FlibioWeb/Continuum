@@ -94,29 +94,36 @@
                 $data = json_decode(file_get_contents($baseDir."updater.json"), true);
                 $cache = $data["cache"];
                 // Check if the cache needs to be reloaded
-                if((new DateTime($cache["date"]))->diff(new DateTime(date("Y-m-d H:i:s")))->format("s") >= 1800) {
+                $elapsed = (new DateTime(date("Y-m-d H:i:s")))->getTimestamp() - (new DateTime($cache["date"]))->getTimestamp();
+                if($elapsed >= 1800) {
                     // Reload the cache
-                    $latest = self::getLatestRelease();
-                    $data["cache"]["content"] = $latest;
+                    $latest = json_decode(file_get_contents("https://api.github.com/repos/FlibioWeb/Continuum/releases/latest", false, $context), true);
+                    $data["cache"]["content"]["id"] = $latest["id"];
+                    $data["cache"]["content"]["tag_name"] = $latest["tag_name"];
+                    $data["cache"]["content"]["published_at"] = $latest["published_at"];
+                    $data["cache"]["content"]["zipball_url"] = $latest["zipball_url"];
                     $data["cache"]["date"] = (new DateTime)->format("Y-m-d H:i:s");
                     // Save the cache
                     file_put_contents($baseDir."updater.json", json_encode($data));
 
-                    return json_decode($latest, true);
+                    return $data["cache"]["content"];
                 } else {
                     // Return the release from the cache
-                    return json_decode($cache["content"], true);
+                    return $cache["content"];
                 }
             } else {
                 $data = json_decode(file_get_contents($baseDir."updater.json"), true);
                 // Load the latest data
-                $latest = file_get_contents("https://api.github.com/repos/FlibioWeb/Continuum/releases/latest", false, $context);
-                $data["cache"]["content"] = $latest;
+                $latest = json_decode(file_get_contents("https://api.github.com/repos/FlibioWeb/Continuum/releases/latest", false, $context), true);
+                $data["cache"]["content"]["id"] = $latest["id"];
+                $data["cache"]["content"]["tag_name"] = $latest["tag_name"];
+                $data["cache"]["content"]["published_at"] = $latest["published_at"];
+                $data["cache"]["content"]["zipball_url"] = $latest["zipball_url"];
                 $data["cache"]["date"] = (new DateTime)->format("Y-m-d H:i:s");
                 // Save the cache
                 file_put_contents($baseDir."updater.json", json_encode($data));
 
-                return json_decode($latest, true);
+                return $data["cache"]["content"];
             }
         }
 
