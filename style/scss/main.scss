@@ -164,6 +164,9 @@ body, html {
 .projectInfo {
     float: left;
     margin-left: 15px;
+    &.clear {
+        margin-left: 0;
+    }
     & .title {
         font-size: 22px;
         font-weight: 500;
