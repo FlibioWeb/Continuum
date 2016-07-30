@@ -54,7 +54,7 @@
             }
         }
 
-        public static function addBuild($project, $commit) {
+        public static function addBuild($project, $commit, $jobId) {
             global $baseDir, $context;
             if(self::projectExists($project)) {
                 // Get the project data
@@ -74,6 +74,7 @@
                     // Set build data
                     $builds[$buildNumber]["date"] = (new DateTime)->format("Y-m-d H:i:s");
                     $builds[$buildNumber]["commit"] = $commit;
+                    $builds[$buildNumber]["job"] = $jobId;
                     $builds[$buildNumber]["message"] = $commitData["commit"]["message"];
                     $builds[$buildNumber]["artifacts"] = array();
 
