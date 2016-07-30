@@ -104,9 +104,13 @@
         }
 
         public function routeUser($basePath, $params) {
-            if(UserManager::isLoggedIn() || UserManager::userExists()) {
+            // Prevent an infinite loop
+            if(UserManager::isLoggedIn()) {
+                UserManager::logout();
+            }
+            if(UserManager::userExists()) {
                 // Route to default page
-                $this->redirect($basePath, "", "bad/You are already have an account!");
+                $this->redirect($basePath, "", "bad/An account already exists!");
             } else {
                 // Load the register page
                 return "register";
