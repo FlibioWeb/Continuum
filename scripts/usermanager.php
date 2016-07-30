@@ -22,6 +22,23 @@
             }
         }
 
+        public static function hasPermission($permission) {
+            if(self::isLoggedIn()) {
+                $permissions = self::getUser()["permissions"];
+                return in_array($permission, $permissions);
+            }
+            return false;
+        }
+
+        public static function hasPermissions($permissions) {
+            foreach ($permissions as $perm) {
+                if(!self::hasPermission($perm)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public static function createNewUser($user, $password, $display, $permissions) {
             global $baseDir;
             // Generate the users file if it doesn't exist
