@@ -6,7 +6,7 @@
 
     class ConfigManager {
 
-        function getConfiguration() {
+        public static function getConfiguration() {
             global $baseDir;
             // Create default options
             $defaultValues = array("api_token" => password_hash(md5(microtime()), PASSWORD_BCRYPT, ['cost' => 11]), "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
@@ -34,7 +34,7 @@
             return $currentConfig;
         }
 
-        function setConfigValue($key, $value) {
+        public static function setConfigValue($key, $value) {
             global $baseDir;
             // Load the current config
             $config = self::getConfiguration();

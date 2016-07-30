@@ -26,17 +26,14 @@
 
                     if(UserManager::createNewUser(strtolower($username), $password, $username, $perms)) {
                         // Success
-                        $_SESSION["message-good"] = "Registered $username as an administrator!";
-                        header("Location: ../");
+                        redirect("", "good/Registered $username as an administrator!");
                     } else {
                         // Creation failed
-                        $_SESSION["message-bad"] = "Registration failed!";
-                        header("Location: ../register");
+                        redirect("register", "bad/Registration failed!");
                     }
                 } else {
                     // Invalid parameters
-                    $_SESSION["message-bad"] = "Invalid parameters!";
-                    header("Location: ../register");
+                    redirect("register", "bad/Invalid parameters!");
                 }
 
                 break;
@@ -50,44 +47,46 @@
 
                     if(UserManager::login($username, $password)) {
                         // Success
-                        $_SESSION["message-good"] = "Logged in!";
-                        header("Location: ../");
+                        redirect("", "good/Logged in!");
                     } else {
                         // Login failed
-                        $_SESSION["message-bad"] = "Invalid login!";
-                        header("Location: ../login");
+                        redirect("login", "bad/Invalid login!");
                     }
                 } else {
                     // Invalid parameters
-                    $_SESSION["message-bad"] = "Invalid parameters!";
-                    header("Location: ../login");
+                    redirect("login", "bad/Invalid parameters!");
                 }
 
                 break;
 
             case 'update':
+                if(!UserManager::hasPermission("admin.super")) {
+                    // User can not do this
+                    redirect("", "bad/You do not have permission to do that!");
+                }
                 $params = FormUtils::verifyPostToken($_POST, "update");
 
                 if($params !== false) {
                     // Download the update
                     if(Updater::downloadUpdate()) {
                         // Success
-                        $_SESSION["message-good"] = "Installed update!";
-                        header("Location: ../admin");
+                        redirect("admin", "good/Installed update!");
                     } else {
                         // Update failed
-                        $_SESSION["message-bad"] = "Failed to install update!";
-                        header("Location: ../admin");
+                        redirect("admin", "bad/Failed to install update!");
                     }
                 } else {
                     // Invalid parameters
-                    $_SESSION["message-bad"] = "Invalid parameters!";
-                    header("Location: ../admin");
+                    redirect("admin", "bad/Invalid parameters!");
                 }
 
                 break;
 
             case 'config':
+                if(!UserManager::hasPermission("admin.super")) {
+                    // User can not do this
+                    redirect("", "bad/You do not have permission to do that!");
+                }
                 $params = FormUtils::getParametersWithToken(array("max_artifacts", "max_size", "private"), $_POST, "config");
 
                 if($params != false) {
@@ -100,12 +99,10 @@
                     ConfigManager::setConfigValue("private", boolval($private));
 
                     // Success
-                    $_SESSION["message-good"] = "Saved configuration!";
-                    header("Location: ../admin");
+                    redirect("admin", "good/Saved configuration!");
                 } else {
                     // Invalid parameters
-                    $_SESSION["message-bad"] = "Invalid parameters!";
-                    header("Location: ../admin");
+                    redirect("admin", "bad/Invalid parameters!");
                 }
 
                 break;
@@ -116,4 +113,26 @@
         }
     } else {
         die("An error has occurred!");
+    }
+
+    function redirect($location, $message = "") {
+        // Parse the message
+        if(!empty($message)) {
+            $max = 1;
+            if(strlen($message) >= 3 && substr($message, 0, 3) == "bad") {
+                if(isset($_SESSION["message-bad"])) {
+                    $_SESSION["message-bad"].=" - ";
+                }
+                $_SESSION["message-bad"].= str_ireplace("bad/", "", $message, $max);
+            }
+            if(strlen($message) >= 4 && substr($message, 0, 4) == "good") {
+                if(isset($_SESSION["message-good"])) {
+                    $_SESSION["message-good"].=" - ";
+                }
+                $_SESSION["message-good"].= str_ireplace("good/", "", $message, $max);
+            }
+        }
+        // Redirect the user
+        header("Location: ../".$location);
+        die("Redirecting...");
     }
