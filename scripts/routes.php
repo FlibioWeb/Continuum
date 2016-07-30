@@ -32,6 +32,27 @@
             die("Redirecting...");
         }
 
+        function checkPrivate($basePath) {
+            if(!UserManager::userExists()) {
+                // There needs to be at least one user
+                $this->redirect($basePath, "register", "bad/Please create an account!");
+            } else {
+                // Check if the site is private
+                if(!ConfigManager::getConfiguration()["private"]) {
+                    // The site is public
+                    return true;
+                } else {
+                    // The site is private
+                    if(UserManager::isLoggedIn() && in_array("view.super", UserManager::getUser()["permissions"])) {
+                        return true;
+                    } else {
+                        // The user is not authenticated
+                        $this->redirect($basePath, "login", "bad/You do not have permission to view that page!");
+                    }
+                }
+            }
+        }
+
         abstract function isValid($params);
 
         abstract function routeUser($basePath, $params);
@@ -47,24 +68,8 @@
         }
 
         public function routeUser($basePath, $params) {
-            if(!UserManager::userExists()) {
-                // There needs to be at least one user
-                $this->redirect($basePath, "register", "good/Please create an account!");
-            } else {
-                // Check if the site is private
-                if(!ConfigManager::getConfiguration()["private"]) {
-                    // The site is public
-                    return "projects";
-                } else {
-                    // The site is private
-                    if(UserManager::isLoggedIn() && in_array("view.super", UserManager::getUser()["permissions"])) {
-                        return "projects";
-                    } else {
-                        // The user is not authenticated
-                        $this->redirect($basePath, "login", "bad/You do not have permission to view that page!");
-                    }
-                }
-            }
+            $this->checkPrivate($basePath);
+            return "projects";
         }
 
     }
@@ -155,6 +160,7 @@
         }
 
         public function routeUser($basePath, $params) {
+            $this->checkPrivate($basePath);
             $GLOBALS['project'] = $params[2];
             $GLOBALS['titlePrefix'] = $params[2];
             return "project";
@@ -178,6 +184,7 @@
         }
 
         public function routeUser($basePath, $params) {
+            $this->checkPrivate($basePath);
             $GLOBALS['project'] = $params[2];
             $GLOBALS['build'] = $params[4];
             $GLOBALS['titlePrefix'] = $params[2]." #".$params[4];
@@ -200,6 +207,7 @@
         }
 
         public function routeUser($basePath, $params) {
+            $this->checkPrivate($basePath);
             $GLOBALS['project'] = $params[2];
             $GLOBALS['titlePrefix'] = $params[2]." Changes";
             return "changes";
