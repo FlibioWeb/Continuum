@@ -1,6 +1,7 @@
 <?php
 
     require_once "spyc.php";
+    require_once "configmanager.php";
 
     $options = array('http' => array('user_agent'=> $_SERVER['HTTP_USER_AGENT']));
     $context = stream_context_create($options);
@@ -112,6 +113,15 @@
 
         public static function addArtifact($project, $build, $file) {
             global $baseDir;
+            // Load the config
+            $config = ConfigManager::getConfiguration();
+            // Verify the file size
+            if($config["max_artifact_size"] != -1) {
+                if($file["size"] > $config["max_artifact_size"]) {
+                    return false;
+                }
+            }
+            // Check if the project exists
             if(self::projectExists($project)) {
                 $projectData = self::getProject($project);
 
@@ -142,6 +152,24 @@
 
                     // Save the artifact
                     file_put_contents($baseDir."projects/".$project."/".$build."/".$filename, file_get_contents($file["tmp_name"]));
+
+                    // Check the project artifact count
+                    $max = $config["max_project_artifacts"];
+                    if($max > -1) {
+                        $count = 0;
+                        foreach (array_reverse($projectData["builds"], true) as $build => $buildData) {
+                            if($count >= $max) {
+                                // Delete the build artifacts
+                                foreach ($buildData["artifacts"] as $artifact) {
+                                    unlink($baseDir."projects/$project/$build/$artifact");
+                                }
+                                // Remove the artifacts from the data file
+                                $projectData["builds"][$build]["artifacts"] = array();
+                                self::writeData($project, $projectData);
+                            }
+                            $count++;
+                        }
+                    }
 
                     return true;
                 }
