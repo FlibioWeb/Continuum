@@ -53,8 +53,8 @@
         }
 
         private static function installUpdate($latest) {
-            global $baseDir;
-            file_put_contents($baseDir."continuuminstall.zip", $latest["zipball_url"]);
+            global $baseDir, $context;
+            file_put_contents($baseDir."continuuminstall.zip", file_get_contents($latest["zipball_url"], false, $context));
             $zip = new ZipArchive;
             $res = $zip->open($baseDir."continuuminstall.zip");
             if ($res === TRUE) {
@@ -63,22 +63,29 @@
                 unlink($baseDir."continuuminstall.zip");
 
                 $destination = $baseDir;
-                $from = $baseDir."Continuum-".$latest["tag_name"];
+                $from = glob($baseDir."FlibioWeb-Continuum-*/")[0];
                 
-                $toMove = scandir($from);
+                self::moveFolder($destination, $from);
 
-                foreach ($toMove as $file) {
-                    if($file != "." && $file != "..") {
-                        rename($from.$file, $destination.$file);
-                    }
-                }
-                
-                rmdir($from);
-
-                rmdir($baseDir."Continuum-".$latest["tag_name"]);
                 return true;
             }
             return false;
+        }
+
+        private static function moveFolder($destination, $from) {
+            $toMove = scandir($from);
+
+            foreach ($toMove as $file) {
+                if($file != "." && $file != "..") {
+                    if(is_dir($destination.$file)) {
+                        self::moveFolder($destination.$file."/", $from.$file."/");
+                    } else {
+                        rename($from.$file, $destination.$file);
+                    }
+                }
+            }
+
+            rmdir($from);
         }
 
         private static function getLatestRelease() {
@@ -87,7 +94,7 @@
                 $data = json_decode(file_get_contents($baseDir."updater.json"), true);
                 $cache = $data["cache"];
                 // Check if the cache needs to be reloaded
-                if((new DateTime($cache["date"]))->diff(new DateTime(date()))->$s >= 1800) {
+                if((new DateTime($cache["date"]))->diff(new DateTime(date("Y-m-d H:i:s")))->format("s") >= 1800) {
                     // Reload the cache
                     $latest = self::getLatestRelease();
                     $data["cache"]["content"] = $latest;

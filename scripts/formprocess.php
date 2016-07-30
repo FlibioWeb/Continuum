@@ -74,7 +74,7 @@
                         $_SESSION["message-good"] = "Installed update!";
                         header("Location: ../admin");
                     } else {
-                        // Login failed
+                        // Update failed
                         $_SESSION["message-bad"] = "Failed to install update!";
                         header("Location: ../admin");
                     }
