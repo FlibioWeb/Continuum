@@ -44,7 +44,8 @@
             <p><input type="number" name="max_size" value="<?php echo $config["max_artifact_size"]; ?>"></p>
         <p class="margin">
             <label>Private</label>
-            <p><input type="checkbox" name="private" <?php if($config["private"]) echo "checked"; ?>></p>
+            <input type="hidden" name="private" value="0">
+            <p><input type="checkbox" name="private" value="1" <?php if($config["private"]) echo "checked"; ?>></p>
         </p>
         <input type="submit" value="Save">
     </form>

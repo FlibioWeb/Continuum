@@ -33,4 +33,14 @@
 
             return $currentConfig;
         }
+
+        function setConfigValue($key, $value) {
+            global $baseDir;
+            // Load the current config
+            $config = self::getConfiguration();
+            // Set the new value
+            $config[$key] = $value;
+            // Save the file
+            file_put_contents($baseDir."config/config.yaml", Spyc::YAMLDump($config, false, false, true));
+        }
     }

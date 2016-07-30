@@ -8,6 +8,7 @@
 
     require_once "formutils.php";
     require_once "usermanager.php";
+    require_once "configmanager.php";
     require_once "updater.php";
 
     if(isset($_POST["formname"])) {
@@ -78,6 +79,29 @@
                         $_SESSION["message-bad"] = "Failed to install update!";
                         header("Location: ../admin");
                     }
+                } else {
+                    // Invalid parameters
+                    $_SESSION["message-bad"] = "Invalid parameters!";
+                    header("Location: ../admin");
+                }
+
+                break;
+
+            case 'config':
+                $params = FormUtils::getParametersWithToken(array("max_artifacts", "max_size", "private"), $_POST, "config");
+
+                if($params != false) {
+                    $maxArtifacts = $params["max_artifacts"];
+                    $maxSize = $params["max_size"];
+                    $private = $params["private"];
+
+                    ConfigManager::setConfigValue("max_project_artifacts", intval($maxArtifacts));
+                    ConfigManager::setConfigValue("max_artifact_size", intval($maxSize));
+                    ConfigManager::setConfigValue("private", boolval($private));
+
+                    // Success
+                    $_SESSION["message-good"] = "Saved configuration!";
+                    header("Location: ../admin");
                 } else {
                     // Invalid parameters
                     $_SESSION["message-bad"] = "Invalid parameters!";
