@@ -67,4 +67,12 @@
                 return $verifiedParamaters;
             }
         }
+
+        public static function verifyPostToken($post, $formName) {
+            if(!isset($post["token"]) || !self::verifyToken($formName, $post["token"])) {
+                return false;
+            }
+
+            return true;
+        }
     }

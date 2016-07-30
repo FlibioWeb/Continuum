@@ -16,7 +16,7 @@
         $commit = $_POST["commit"];
 
         // Check if the user is authenticated
-        if($user == $config["username"] && $pw == $config["secure_token"]) {
+        if($user == "continuum" && $pw == $config["secure_token"]) {
 
             // Create a new build
             $result = ProjectManager::addBuild($project, $commit);

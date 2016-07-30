@@ -8,6 +8,8 @@
 
         function getConfiguration() {
             global $baseDir;
+            // Create default options
+            $defaultValues = array("api_token" => password_hash(md5(microtime()), PASSWORD_BCRYPT, ['cost' => 11]), "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
             // Check if the config directory exists
             if(!file_exists($baseDir."config")) {
                 mkdir($baseDir."config");
@@ -21,16 +23,14 @@
                 file_put_contents($baseDir."config/config.yaml", "");
             }
             // Set configuration values if they don't exist
-            foreach(DefaultConfig::defaultValues as $option => $value) {
+            foreach($defaultValues as $option => $value) {
                 if(!isset($currentConfig[$option])) {
                     $currentConfig[$option] = $value;
                 }
             }
 
+            file_put_contents($baseDir."config/config.yaml", Spyc::YAMLDump($currentConfig, false, false, true));
+
             return $currentConfig;
         }
-    }
-
-    abstract class DefaultConfig {
-        const defaultValues = array("username" => "your_username", "secure_token" => "your_secure_token", "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
     }

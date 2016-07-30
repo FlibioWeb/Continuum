@@ -8,6 +8,7 @@
 
     require_once "formutils.php";
     require_once "usermanager.php";
+    require_once "updater.php";
 
     if(isset($_POST["formname"])) {
         $formName = $_POST["formname"];
@@ -59,6 +60,28 @@
                     // Invalid parameters
                     $_SESSION["message-bad"] = "Invalid parameters!";
                     header("Location: ../login");
+                }
+
+                break;
+
+            case 'update':
+                $params = FormUtils::verifyPostToken($_POST, "update");
+
+                if($params !== false) {
+                    // Download the update
+                    if(Updater::downloadUpdate()) {
+                        // Success
+                        $_SESSION["message-good"] = "Installed update!";
+                        header("Location: ../admin");
+                    } else {
+                        // Login failed
+                        $_SESSION["message-bad"] = "Failed to install update!";
+                        header("Location: ../admin");
+                    }
+                } else {
+                    // Invalid parameters
+                    $_SESSION["message-bad"] = "Invalid parameters!";
+                    header("Location: ../admin");
                 }
 
                 break;

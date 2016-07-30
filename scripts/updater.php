@@ -6,6 +6,17 @@
 
     class Updater {
 
+        public static function getCurrentVersion() {
+            global $baseDir;
+            if(self::hasVersionData()) {
+                $data = json_decode(file_get_contents($baseDir."updater.json"), true);
+                // Return the version name
+                return $data["version"]["name"];
+            } else {
+                return false;
+            }
+        }
+
         public static function checkForUpdate() {
             global $baseDir;
             if(self::hasVersionData()) {
@@ -30,10 +41,11 @@
                 // Get the latest release
                 $latest = self::getLatestRelease();
                 $data["version"]["date"] = $latest["published_at"];
+                $data["version"]["name"] = $latest["tag_name"];
                 $data["version"]["id"] = $latest["id"];
                 // Install the update
                 if(self::installUpdate($latest)) {
-                    file_put_contents($baseDir."updater.json", $data);
+                    file_put_contents($baseDir."updater.json", json_encode($data));
                     return true;
                 }
             }
@@ -126,7 +138,7 @@
                 // Check if the file contains version data
                 $data = json_decode(file_get_contents($baseDir."updater.json"), true);
                 if(isset($data["version"])) {
-                    return isset($data["version"]["id"], $data["version"]["date"]);
+                    return isset($data["version"]["id"], $data["version"]["date"], $data["version"]["name"]);
                 } else {
                     return false;
                 }
