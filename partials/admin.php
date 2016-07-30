@@ -33,7 +33,7 @@
         <input type="hidden" name="token" value="<?php echo $configToken; ?>">
         <p class="margin">
             <label>API Token</label>
-            <p><input type="text" name="apiToken" value="<?php echo $config["api_token"]; ?>" readonly size=<?php echo strlen($config["api_token"]); ?>>
+            <p><code><?php echo $config["api_token"]; ?></code>
         </p>
         <p class="margin">
             <label>Maximum Project Artifacts</label>
