@@ -71,6 +71,10 @@
             <label>Repository Branch</label>
             <p><input type="text" name="branch"></p>
         </p>
+        <p class="margin">
+            <label>Description</label>
+            <p><input type="text" name="description"></p>
+        </p>
         <input type="submit" value="Add Project">
     </form>
     <p>

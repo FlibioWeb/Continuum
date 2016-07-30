@@ -4,7 +4,9 @@
 
     $projects = "";
 
-    foreach (ProjectManager::getProjects() as $project => $data) {
+    foreach (ProjectManager::getProjects() as $project) {
+        $data = ProjectManager::getProject($project);
+
         $buildNumber = $data["build-number"];
         if($buildNumber > 0) {
             $buildDate = (new DateTime($data["builds"][$buildNumber]["date"]))->format("M j, Y g:i a");

@@ -113,18 +113,19 @@
                     // User can not do this
                     redirect("", "bad/You do not have permission to do that!");
                 }
-                $params = FormUtils::getParametersWithToken(array("user", "repo", "branch"), $_POST, "addproject");
+                $params = FormUtils::getParametersWithToken(array("user", "repo", "branch", "description"), $_POST, "addproject");
 
                 if($params != false) {
                     $user = $params["user"];
                     $repo = $params["repo"];
                     $branch = $params["branch"];
+                    $description = $params["description"];
 
                     if(ProjectManager::projectExists($repo)) {
                         // The project exists
                         redirect("admin", "bad/That project already exists!");
                     } else {
-                        if(ProjectManager::createProject($repo, $user."/".$repo, $branch)) {
+                        if(ProjectManager::createProject($repo, $user."/".$repo, $branch, $description)) {
                             redirect("admin", "good/Created project!");
                         } else {
                             redirect("admin", "bad/Failed to create project!");

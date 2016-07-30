@@ -16,7 +16,7 @@
         $build = $_POST["build"];
 
         // Check if the user is authenticated
-        if($user == "continuum" && $pw == $config["secure_token"]) {
+        if($user == "continuum" && $pw == $config["api_token"]) {
                   
             $filename = $_FILES["file"]["name"];
             $size = $_FILES["file"]["size"];

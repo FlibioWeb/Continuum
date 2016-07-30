@@ -1,5 +1,7 @@
 <?php
 
+    require_once "spyc.php";
+
     $options = array('http' => array('user_agent'=> $_SERVER['HTTP_USER_AGENT']));
     $context = stream_context_create($options);
     $baseDir = dirname(__DIR__)."/";
@@ -9,32 +11,44 @@
         public static function getProjects() {
             global $baseDir;
             // Create the projects directory if it doesn't exist
-            if(!file_exists($baseDir."projects")) {
+            if(!is_dir($baseDir."projects")) {
                 mkdir($baseDir."projects");
             }
-            // Create the data file if it doesn't exist
-            if(!file_exists($baseDir."projects/data.json")) {
-                file_put_contents($baseDir."projects/data.json", "{}");
+            // Make a blank projects array
+            $projects = array();
+            // Loop through the project folders
+            $potential = scandir($baseDir."projects");
+            foreach ($potential as $project) {
+                if($project != "." && $project != "..") {
+                    // Check if the file is a directory
+                    if(is_dir($baseDir."projects/$project")) {
+                        // Check if the project data file exists
+                        if(self::projectDataIntact($project)) {
+                            array_push($projects, $project);
+                        }
+                    }
+                }
             }
-            // Load the data
-            return json_decode(file_get_contents($baseDir."projects/data.json"), true);
+
+            return $projects;
         }
 
         public static function projectExists($project) {
             global $baseDir;
-            return isset(self::getProjects()[$project]);
+            return in_array($project, self::getProjects());
         }
 
         public static function getProject($project) {
             global $baseDir;
             if(self::projectExists($project)) {
-                return self::getProjects()[$project];
+                // Load the project data
+                return Spyc::YAMLLoad($baseDir."projects/$project/data.yaml");
             } else {
-                return null;
+                return false;
             }
         }
 
-        public static function createProject($projectName, $github, $branch) {
+        public static function createProject($projectName, $github, $branch, $description) {
             global $baseDir;
             // Make sure the project doesn't already exist
             if(!self::projectExists($projectName)) {
@@ -43,14 +57,15 @@
                     mkdir($baseDir."projects/".$projectName);
                 }
                 // Add the project to the data file
-                $projectData = self::getProjects();
-                $projectData[$projectName]["display"] = $projectName;
-                $projectData[$projectName]["github"] = $github;
-                $projectData[$projectName]["branch"] = $branch;
-                $projectData[$projectName]["description"] = "";
-                $projectData[$projectName]["build-number"] = 0;
-                $projectData[$projectName]["builds"] = array();
-                self::writeData($projectData);
+                $projectData = array();
+                $projectData["name"] = $projectName;
+                $projectData["display"] = $projectName;
+                $projectData["github"] = $github;
+                $projectData["branch"] = $branch;
+                $projectData["description"] = $description;
+                $projectData["build-number"] = 0;
+                $projectData["builds"] = array();
+                self::writeData($projectName, $projectData);
 
                 return true;
             }
@@ -61,16 +76,16 @@
             global $baseDir, $context;
             if(self::projectExists($project)) {
                 // Get the project data
-                $projectData = self::getProjects();
+                $projectData = self::getProject($project);
 
                 // Load the build number
-                $buildNumber = $projectData[$project]["build-number"] + 1;
+                $buildNumber = $projectData["build-number"] + 1;
 
                 // Get all project builds
-                $builds = $projectData[$project]["builds"];
+                $builds = $projectData["builds"];
 
                 // Load the commit
-                $commitData = file_get_contents("https://api.github.com/repos/".$projectData[$project]["github"]."/commits/$commit", false, $context);
+                $commitData = file_get_contents("https://api.github.com/repos/".$projectData["github"]."/commits/$commit", false, $context);
                 $commitData = json_decode($commitData, true);
 
                 if(isset($commitData["commit"]["message"])) {
@@ -85,9 +100,9 @@
                     mkdir($baseDir."projects/".$project."/".$buildNumber);
 
                     // Save the data
-                    $projectData[$project]["builds"] = $builds;
-                    $projectData[$project]["build-number"] = $buildNumber;
-                    self::writeData($projectData);
+                    $projectData["builds"] = $builds;
+                    $projectData["build-number"] = $buildNumber;
+                    self::writeData($project, $projectData);
 
                     return $buildNumber;
                 }
@@ -98,10 +113,10 @@
         public static function addArtifact($project, $build, $file) {
             global $baseDir;
             if(self::projectExists($project)) {
-                $projectData = self::getProjects();
+                $projectData = self::getProject($project);
 
                 // Get all project builds
-                $builds = $projectData[$project]["builds"];
+                $builds = $projectData["builds"];
 
                 // Check if the build exists
                 if(isset($builds[$build])) {
@@ -122,8 +137,8 @@
                     array_push($artifacts, $filename);
 
                     // Save the build data
-                    $projectData[$project]["builds"][$build]["artifacts"] = $artifacts;
-                    self::writeData($projectData);
+                    $projectData["builds"][$build]["artifacts"] = $artifacts;
+                    self::writeData($project, $projectData);
 
                     // Save the artifact
                     file_put_contents($baseDir."projects/".$project."/".$build."/".$filename, file_get_contents($file["tmp_name"]));
@@ -135,14 +150,27 @@
             return false;
         }
 
-        private static function writeData($data) {
+        private static function projectDataIntact($project) {
+            global $baseDir;
+            if(file_exists($baseDir."projects/$project/data.yaml")) {
+                $data = Spyc::YAMLLoad($baseDir."projects/$project/data.yaml");
+                return isset($data["name"],$data["display"],$data["github"],$data["branch"],$data["description"],$data["build-number"],$data["builds"]);
+            }
+            return false;
+        }
+
+        private static function writeData($project, $data) {
             global $baseDir;
             // Create the projects directory if it doesn't exist
             if(!file_exists($baseDir."projects")) {
                 mkdir($baseDir."projects");
             }
+            // Create the project directory if it doesn't exist
+            if(!file_exists($baseDir."projects/".$project)) {
+                mkdir($baseDir."projects/".$project);
+            }
             // Write the data
-            file_put_contents($baseDir."projects/data.json", json_encode($data));
+            file_put_contents($baseDir."projects/$project/data.yaml", Spyc::YAMLDump($data, false, false, true));
         }
 
     }

@@ -17,7 +17,7 @@
         $job = $_POST["job"];
 
         // Check if the user is authenticated
-        if($user == "continuum" && $pw == $config["secure_token"]) {
+        if($user == "continuum" && $pw == $config["api_token"]) {
 
             // Create a new build
             $result = ProjectManager::addBuild($project, $commit, $job);
