@@ -49,7 +49,7 @@
             }
         }
 
-        public static function createProject($projectName, $github, $branch, $description) {
+        public static function createProject($projectName, $display, $github, $branch, $description) {
             global $baseDir;
             // Make sure the project doesn't already exist
             if(!self::projectExists($projectName)) {
@@ -60,7 +60,7 @@
                 // Add the project to the data file
                 $projectData = array();
                 $projectData["name"] = $projectName;
-                $projectData["display"] = $projectName;
+                $projectData["display"] = $display;
                 $projectData["github"] = $github;
                 $projectData["branch"] = $branch;
                 $projectData["description"] = $description;

@@ -60,6 +60,10 @@
         <input type="hidden" name="formname" value="addproject">
         <input type="hidden" name="token" value="<?php echo $addProjectToken; ?>">
         <p class="margin">
+            <label>Project Name</label>
+            <p><input type="text" name="name">
+        </p>
+        <p class="margin">
             <label>GitHub User</label>
             <p><input type="text" name="user">
         </p>

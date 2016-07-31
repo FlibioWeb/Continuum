@@ -15,7 +15,7 @@
         }
         $link = "<a href='".BASEPATH."project/".$project."'>";
 
-        $projects.="<tr><td>$link$project</a></td><td>$link$buildNumber</a></td><td>$link$buildDate</a></td></tr>";
+        $projects.="<tr><td>$link".$data["display"]."</a></td><td>$link$buildNumber</a></td><td>$link$buildDate</a></td></tr>";
     }
 ?>
 <table class="projectTable">
