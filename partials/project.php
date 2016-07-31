@@ -31,14 +31,19 @@
         }
     }
 ?>
-<table class="buildTable">
-    <tr><th>Recent Builds</th><th></th></tr>
-    <?php echo $buildList; ?>
-</table>
+<div class="sidebar">
+    <i class="fa fa-arrow-left"></i><a href="<?php echo BASEPATH; ?>">Back to Projects</a>
+    <p>
+    <i class="fa fa-github"></i><a href="https://github.com/<?php echo $data["github"]."/tree/".$data["branch"]; ?>">View on GitHub</a>
+    <p>
+    <i class="fa fa-pencil-square-o"></i><a href="<?php echo BASEPATH."project/$project/changes"; ?>">Changelog</a>
+    <table class="buildTable">
+        <tr><th>Recent Builds</th><th></th></tr>
+        <?php echo $buildList; ?>
+    </table>
+</div>
 <div class="projectInfo">
     <span class="title"><?php echo $data["display"]; ?></span>
-    <p>
-    <a href="https://github.com/<?php echo $data["github"]."/tree/".$data["branch"]; ?>">View on GitHub</a>
     <p>
     <?php echo $data["description"]; ?>
     </p>
@@ -46,8 +51,6 @@
     <p>
     <code><?php echo nl2br($latestMessage); ?></code>
     </p>
-    <a href="<?php echo BASEPATH."project/$project/changes"; ?>">All Changes</a>
-    <p>
     <span class="subtitle">Latest Artifacts</span>
     <p>
     <?php echo $artifacts; ?>

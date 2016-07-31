@@ -119,51 +119,71 @@ body, html {
         }
     }
 }
-.buildTable {
+.sidebar {
     float: left;
-    border-spacing: 0;
-    border-bottom: 1px solid #CCCCCC;
-    & th {
-        background-color: #F2F2F2;
-        font-weight: 500;
-        font-size: 17px;
-        padding: 6px;
-        border-top: 1px solid #CCCCCC;
-        &:first-child {
-            border-top-left-radius: 10px;
-            border-left: 1px solid #CCCCCC;
-        }
-        &:last-child {
-            border-top-right-radius: 10px;
-            border-right: 1px solid #CCCCCC;
+    & i {
+        margin-right: 5px;
+    }
+    & a {
+        color: #3071A9;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
         }
     }
-    & td {
-        padding: 6px;
-        & a {
-            text-decoration: none;
-            color: black;
-            display: block;
+    & .buildTable {
+        margin-top: 20px;
+        border-spacing: 0;
+        border-bottom: 1px solid #CCCCCC;
+        & th {
+            background-color: #F2F2F2;
+            font-weight: 500;
+            font-size: 17px;
+            padding: 6px;
+            border-top: 1px solid #CCCCCC;
+            &:first-child {
+                border-top-left-radius: 10px;
+                border-left: 1px solid #CCCCCC;
+            }
+            &:last-child {
+                border-top-right-radius: 10px;
+                border-right: 1px solid #CCCCCC;
+            }
         }
-        &:first-child {
-            border-left: 1px solid #CCCCCC;
+        & td {
+            padding: 6px;
+            & a {
+                text-decoration: none;
+                color: black;
+                display: block;
+            }
+            &:first-child {
+                border-left: 1px solid #CCCCCC;
+            }
+            &:last-child {
+                border-right: 1px solid #CCCCCC;
+            }
         }
-        &:last-child {
-            border-right: 1px solid #CCCCCC;
-        }
-    }
-    & tr {
-        &:last-child {
-            border-bottom: 1px solid #CCCCCC;
-        }
-        &:nth-child(odd) {
-            background-color: #F8F8F8;
+        & tr {
+            &:last-child {
+                border-bottom: 1px solid #CCCCCC;
+            }
+            &:nth-child(odd) {
+                background-color: #F8F8F8;
+            }
         }
     }
 }
 .projectInfo {
     float: left;
     margin-left: 15px;
+    & a {
+        color: #3071A9;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
     &.clear {
         margin-left: 0;
     }

@@ -29,6 +29,7 @@
 <head>
     <title><?php if(isset($titlePrefix)) echo $titlePrefix." | "; ?>Continuum</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Dosis" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>style/main.css?hello=<?php echo microtime(); ?>">
 </head>
 <body>

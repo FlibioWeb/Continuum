@@ -19,6 +19,9 @@
         $count++;
     }
 ?>
+<div class="sidebar">
+    <i class="fa fa-arrow-left"></i><a href="<?php echo BASEPATH."project/".$project; ?>">Back to <?php echo $data["display"] ?></a>
+</div>
 <div class="projectInfo">
     <span class="title"><?php echo $display; ?> Changelog</span>
     <p>

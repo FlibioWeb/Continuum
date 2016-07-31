@@ -10,9 +10,9 @@
         $message = $buildData["message"];
     }
 
-    $log = "N/A";
+    $log = false;
     if(isset($buildData["job"], $data["github"])) {
-        $log = "<a href=\"https://travis-ci.org/".$data["github"]."/builds/".$buildData["job"]."\">View on Travis CI</a>";
+        $log = "<i class=\"fa fa-list-alt\"></i><a href=\"https://travis-ci.org/".$data["github"]."/builds/".$buildData["job"]."\">Build Log</a>";
     }
 
     $artifacts = "";
@@ -23,19 +23,18 @@
         }
     }
 ?>
-<div class="projectInfo clear">
-    <span class="title"><?php echo $data["display"]." Build #".$build; ?></span>
+<div class="sidebar">
+    <i class="fa fa-arrow-left"></i><a href="<?php echo BASEPATH."project/".$project; ?>">Back to <?php echo $data["display"]; ?></a>
     <p>
-    <a href="<?php echo BASEPATH."project/$project"; ?>">Back to Project</a>
+    <?php if($log !== false) echo $log; ?>
+</div>
+<div class="projectInfo">
+    <span class="title"><?php echo $data["display"]." Build #".$build; ?></span>
     <p>
     <code><?php echo nl2br($message); ?></code>
     </p>
     <span class="subtitle">Build Artifacts</span>
     <p>
     <?php echo $artifacts; ?>
-    </p>
-    <span class="subtitle">Build Log</span>
-    <p>
-    <?php echo $log; ?>
     </p>
 </div>
