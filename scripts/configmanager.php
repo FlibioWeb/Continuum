@@ -9,7 +9,7 @@
         public static function getConfiguration() {
             global $baseDir;
             // Create default options
-            $defaultValues = array("api_token" => password_hash(md5(microtime()), PASSWORD_BCRYPT, ['cost' => 11]), "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
+            $defaultValues = array("api_token" => hash('ripemd160', md5(microtime())), "max_project_artifacts" => -1, "max_artifact_size" => 100000000, "private" => false);
             // Check if the config directory exists
             if(!file_exists($baseDir."config")) {
                 mkdir($baseDir."config");

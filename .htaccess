@@ -1,5 +1,7 @@
 Options -Indexes
 
+SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
+
 <FilesMatch "\.(json|yaml)$">
 Order Allow,Deny
 Deny from all
