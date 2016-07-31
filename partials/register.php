@@ -13,5 +13,7 @@
     <p>
     <label>Password</label><p><input type="password" name="password">
     <p>
+    <label>Verify Password</label><p><input type="password" name="password2">
+    <p>
     <input type="submit" value="Register">
 </form>

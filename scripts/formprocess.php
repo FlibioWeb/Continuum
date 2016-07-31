@@ -17,11 +17,17 @@
 
         switch ($formName) {
             case 'register':
-                $params = FormUtils::getParametersWithToken(array("username", "password"), $_POST, "register");
+                $params = FormUtils::getParametersWithToken(array("username", "password", "password2"), $_POST, "register");
 
                 if($params != false) {
                     $username = $params["username"];
                     $password = $params["password"];
+                    $password2 = $params["password2"];
+
+                    if($password !== $password2) {
+                        // The passwords do not match
+                        redirect("register", "bad/Passwords do not match!");
+                    }
 
                     $perms = array("admin.super", "view.super");
 
