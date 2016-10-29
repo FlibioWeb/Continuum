@@ -4,6 +4,11 @@
         session_start();
     }
 
+    // Verify the PHP version
+    if (version_compare(phpversion(), '5.5') < 0) {
+        die("<b>Notice: </b>Continuum requires PHP version 5.5 or greater! You are running version ".phpversion()."!");
+    }
+
     define('BASEDIR', __DIR__."/");
     define('BASEPATH', implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/');
 
